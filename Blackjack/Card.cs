@@ -12,7 +12,6 @@ namespace Blackjack
 
         public static Dictionary<string, int> cardValue = new Dictionary<string, int>
             {
-                { "1", 1 },
                 { "2", 2 },
                 { "3", 3 },
                 { "4", 4 },
@@ -34,7 +33,7 @@ namespace Blackjack
             {
                 displayName = $"'{this.Name}'";
             }
-            return displayName
+            return displayName;
 
         }
 

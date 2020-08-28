@@ -28,5 +28,18 @@ namespace Blackjack
             }
             return playerScore;
         }
+
+        public static Player FindWinner(Player player, Player dealer)
+        {
+            if (player.Score > 21 || (dealer.Score > player.Score && dealer.Score < 21))
+            {
+                return dealer;
+            }
+            else if (player.Score > dealer.Score || dealer.Score > 21)
+            {
+                return player;
+            }
+            else { return null; }
+        }
     }
 }
