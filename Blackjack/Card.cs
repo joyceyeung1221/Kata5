@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Blackjack
 {
     public class Card
     {
-        static Dictionary<string, int> cardValue;
         public string Name { get; private set; }
         public string Suit { get; private set; }
         public int Value { get; private set; }
 
-        static Card()
-        {
-            cardValue = new Dictionary<string, int>
+        public static Dictionary<string, int> cardValue = new Dictionary<string, int>
             {
                 { "1", 1 },
                 { "2", 2 },
@@ -28,7 +26,19 @@ namespace Blackjack
                 { "Queen", 10 },
                 { "Ace", 0 },
             };
+
+        public string getDisplayName()
+        {
+            string displayName = Name;
+            if (new string[] { "King", "Queen", "Jack", "Ace" }.Contains(Name))
+            {
+                displayName = $"'{this.Name}'";
+            }
+            return displayName
+
         }
+
+
 
         public Card(string suit, string name)
         {
