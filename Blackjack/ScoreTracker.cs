@@ -24,7 +24,7 @@ namespace Blackjack
             }
             if (numberOfAce > 0)
             {
-                playerScore += (playerScore > 11 ? 1 : 11);
+                playerScore += playerScore > 10 ? 1 : 11;
             }
             return playerScore;
         }
