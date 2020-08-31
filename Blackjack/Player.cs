@@ -12,10 +12,13 @@ namespace Blackjack
 
         public int Score { get; set; }
 
-        public Player()
+        public bool Isdealer { get; set; }
+
+        public Player(bool isDealer = false)
         {
             Hand = new List<Card>();
             Score = 0;
+            Isdealer = isDealer;
         }
 
         public void TakeCard(Card card)
