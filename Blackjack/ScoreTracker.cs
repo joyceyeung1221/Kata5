@@ -10,9 +10,11 @@ namespace Blackjack
 
             int playerScore = 0;
             int numberOfAce = 0;
+
             foreach (Card card in hand)
             {
                 playerScore += card.Value;
+
                 if (card.Value == 0)
                 {
                     numberOfAce++;

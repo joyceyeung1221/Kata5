@@ -43,20 +43,25 @@ namespace Blackjack
                 if (!IsDealer)
                 {
                     playerMove = blackJackEngine.GetPlayerNextMove();
+
                     if (playerMove != 1)
                     {
                         break;
                     }
                 }
                 var currentCard = deck.HandOutCard();
-                TakeCard(currentCard);
-                write($"\n{title} [{currentCard.getDisplayName()}, '{currentCard.Suit}']\n");
-                wait();
-                UpdateScore(ScoreTracker.CalculateScore(this.Hand));
-                write($"\n{blackJackEngine.ConfirmPlayerStatus(this)}\n");
 
+                TakeCard(currentCard);
+
+                write($"\n{title} [{currentCard.getDisplayName()}, '{currentCard.Suit}']\n");
+
+                wait();
+
+                UpdateScore(ScoreTracker.CalculateScore(this.Hand));
+
+                write($"\n{blackJackEngine.ConfirmPlayerStatus(this)}\n");
             }
-         }
+        }
 
         private void write(string text)
         {

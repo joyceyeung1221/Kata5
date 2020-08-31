@@ -6,13 +6,18 @@ namespace Blackjack
     public class Deck
     {
         public List<Card> Cards { get; set; }
+
         public Deck()
         {
-            Cards = new List<Card>();
-            Random random = new Random();
             string[] suits = { "CLUB","DIAMOND","HEART","SPADE" };
             string[] listOfCardNames = { "2", "3", "4", "5", "6", "7", "8", "9", "Jack", "Queen", "King", "Ace" };
+
+            Random random = new Random();
+
+            Cards = new List<Card>();
+
             var listOfCards = new List<Card>();
+
             foreach (string suit in suits)
             {
                 foreach(string cardName in listOfCardNames)
@@ -26,7 +31,9 @@ namespace Blackjack
         public Card HandOutCard()
         {
             var card = this.Cards.Last();
+
             this.Cards.Remove(this.Cards.Last());
+
             return card;
         }
 

@@ -10,12 +10,17 @@ namespace Blackjack
             do
             {
                 Console.Clear();
+
                 new BlackJackEngine().StartGame();
+
                 restart = null;
+
                 while (restart == null)
                 {
                     Console.WriteLine("\nContinue? (Y/N) ");
+
                     var input = Console.ReadKey();
+
                     switch (input.Key)
                     {
                         case ConsoleKey.Y:

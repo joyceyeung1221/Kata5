@@ -15,7 +15,7 @@ namespace Blackjack
         private const int waitTimeInms = 2000;
         public int MaxScore => maxScore;
         public int MinScore => minScore;
-        
+
 
         public BlackJackEngine()
         {
@@ -27,7 +27,9 @@ namespace Blackjack
         public void StartGame()
         {
             write("*** Start Dealing ***\n");
+
             wait();
+
             this.handleStartingHands();
 
             _player.CompleteTurns(_deck, this);
@@ -37,9 +39,9 @@ namespace Blackjack
                 _dealer.CompleteTurns(_deck, this);
             }
 
-            write(announceWinner(ScoreTracker.FindWinner(_player,_dealer)));
-            wait();
+            write(announceWinner(ScoreTracker.FindWinner(_player, _dealer)));
 
+            wait();
         }
 
         private void handleStartingHands()
@@ -47,22 +49,28 @@ namespace Blackjack
             for (int i = 1; i <= _numberOfStartingCards; i++)
             {
                 _player.TakeCard(_deck.HandOutCard());
+
                 _dealer.TakeCard(_deck.HandOutCard());
             }
+
             _player.UpdateScore(ScoreTracker.CalculateScore(_player.Hand));
+
             _dealer.UpdateScore(ScoreTracker.CalculateScore(_dealer.Hand));
         }
 
         public string ConfirmPlayerStatus(Player player)
         {
             string title = player.IsDealer ? "Dealer is" : "You are";
+
             var listOfCards = new List<string>();
 
             foreach (Card card in player.Hand)
             {
                 listOfCards.Add($"[{card.getDisplayName()}, '{card.Suit}']");
             }
+
             var handInDisplayFormat = String.Join(", ", listOfCards);
+
             string playerScore = player.Score > 21 ? "a Bust!" : player.Score.ToString();
 
             return $"{title} currently at {playerScore}\nwith the hand [{handInDisplayFormat}]\n";
@@ -76,22 +84,29 @@ namespace Blackjack
             {
                 isNumber = true;
                 userInput = null;
+
                 write("Hit or stay? (Hit = 1, Stay = 0) ");
+
                 isNumber = Int32.TryParse(Console.ReadLine(), out int input);
+
                 userInput = input;
+
             } while (!isNumber || userInput > 1 || userInput < 0);
+
             return userInput.GetValueOrDefault();
         }
 
         private string announceWinner(Player winner)
-        {   
+        {
             if (winner == _player)
             {
                 return "\nYou beat the dealer!\n";
-            } else if(winner == _dealer)
+            }
+            else if (winner == _dealer)
             {
                 return "\nDealer wins!\n";
-            } else { return "\nIts a draw!\n"; }
+            }
+            else { return "\nIts a draw!\n"; }
         }
 
         private void write(string text)
@@ -99,7 +114,7 @@ namespace Blackjack
             Console.Write(text);
         }
 
-        private void wait(int ms=waitTimeInms)
+        private void wait(int ms = waitTimeInms)
         {
             System.Threading.Thread.Sleep(ms);
         }
