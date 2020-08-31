@@ -12,13 +12,13 @@ namespace Blackjack
 
         public int Score { get; set; }
 
-        public bool Isdealer { get; set; }
+        public bool IsDealer { get; set; }
 
         public Player(bool isDealer = false)
         {
             Hand = new List<Card>();
             Score = 0;
-            Isdealer = isDealer;
+            IsDealer = isDealer;
         }
 
         public void TakeCard(Card card)
@@ -31,28 +31,34 @@ namespace Blackjack
             return Score = score;
         }
 
-        public void CompleteTurns(int maxScore, Deck deck, BlackJackEngine blackJackEngine)
+        public void CompleteTurns(Deck deck, BlackJackEngine blackJackEngine)
         {
+            string title = IsDealer ? "Dealer draws" : "You draw";
+
             int playerMove;
             write($"\n{blackJackEngine.ConfirmPlayerStatus(this)}\n");
 
-            while (Score < maxScore)
+            while (Score < (IsDealer ? blackJackEngine.MinScore : blackJackEngine.MaxScore))
             {
-                playerMove = blackJackEngine.GetPlayerNextMove();
-                if (playerMove == 1)
+                if (!IsDealer)
                 {
-                    var currentCard = deck.HandOutCard();
-                    TakeCard(currentCard);
-                    write($"\nYou draw [{currentCard.getDisplayName()}, '{currentCard.Suit}']\n");
-                    wait();
-                    UpdateScore(ScoreTracker.CalculateScore(this.Hand));
-                    write($"\n{blackJackEngine.ConfirmPlayerStatus(this)}\n");
+                    playerMove = blackJackEngine.GetPlayerNextMove();
+                    if (playerMove != 1)
+                    {
+                        break;
+                    }
                 }
-                else { break; }
-            }
-        }
+                var currentCard = deck.HandOutCard();
+                TakeCard(currentCard);
+                write($"\n{title} [{currentCard.getDisplayName()}, '{currentCard.Suit}']\n");
+                wait();
+                UpdateScore(ScoreTracker.CalculateScore(this.Hand));
+                write($"\n{blackJackEngine.ConfirmPlayerStatus(this)}\n");
 
-        protected void write(string text)
+            }
+         }
+
+        private void write(string text)
         {
             Console.Write(text);
         }

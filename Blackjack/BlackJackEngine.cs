@@ -7,18 +7,20 @@ namespace Blackjack
     public class BlackJackEngine
     {
         private Player _player;
-        private Dealer _dealer;
+        private Player _dealer;
         private Deck _deck;
         private const int _numberOfStartingCards = 2;
         private const int maxScore = 21;
+        private const int minScore = 17;
         private const int waitTimeInms = 2000;
+        public int MaxScore => maxScore;
+        public int MinScore => minScore;
         
-
 
         public BlackJackEngine()
         {
             _player = new Player();
-            _dealer = new Dealer();
+            _dealer = new Player(isDealer: true);
             _deck = new Deck();
         }
 
@@ -28,7 +30,7 @@ namespace Blackjack
             wait();
             this.handleStartingHands();
 
-            _player.CompleteTurns(maxScore, _deck, this);
+            _player.CompleteTurns(_deck, this);
 
             if (_player.Score <= maxScore)
             {
@@ -53,7 +55,7 @@ namespace Blackjack
 
         public string ConfirmPlayerStatus(Player player)
         {
-            string title = player == _player ? "You are" : "Dealer is";
+            string title = player.IsDealer ? "Dealer is" : "You are";
             var listOfCards = new List<string>();
 
             foreach (Card card in player.Hand)
